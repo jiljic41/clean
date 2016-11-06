@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Pretraživanje</title>
+  <meta name="description" content="Pretraga">
+  <meta name="author" content="SitePoint">
+  <link href="stil.css" rel="stylesheet">
+</head>
+
+<body>
+		<div class="row">
+	    	<div class="col-d-3 col-t-12 col-m-12">
+	    	<div class="naslov">RDF</div>	
+	    	</div>
+	    	<div class="col-d-3 col-t-4 col-m-12">
+	    	<div class="uvjet"><input id="uvjet" type="text" /></div>
+	    	</div>
+	    	<div class="col-d-3 col-t-4 col-m-12">
+	    		<a onclick="trazi()" id="trazi" href="#" class="btn">Traži</a>
+	    	</div>
+	    	<div id="rezultat" class="col-d-3 col-t-4 col-m-12">
+	    		
+	    	</div>
+	    </div>
+	
+  <script>
+  
+  var putanjaAPI = "http://it.ffos.hr/nastava20162017/oms/P3/ontologijaAPI/foaf:";
+
+  	
+  	function trazi(){
+  		var uvjet = document.getElementById("uvjet");
+  		if(uvjet.value.trim()===""){
+  			alert("Obavezan unos");
+  			return;
+  		}
+  		
+  		 var xmlhttp = new XMLHttpRequest();
+
+	    xmlhttp.onreadystatechange = function() {
+	        if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+	           if (xmlhttp.status == 200) {
+	                var obj = JSON.parse(xmlhttp.responseText);
+
+					document.getElementById("rezultat").innerHTML=obj.poruka;
+	           }
+	           else if (xmlhttp.status == 400) {
+	              alert('Greška');
+	           }
+	           else {
+	               alert('greška');
+	           }
+	        }
+	    };
+	
+	    xmlhttp.open("GET", putanjaAPI + uvjet.value, true);
+	    xmlhttp.send();
+	  		
+  	}
+  	
+  </script>
+</body>
+</html>
